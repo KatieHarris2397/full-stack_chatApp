@@ -1,0 +1,19 @@
+application:
+  name: rich-vale-full-stack-chatapp
+  pods:
+    - name: app
+      image: "# filled by pipeline"
+      path: /
+      servicePorts:
+        - 5001
+      vars:
+        PORT: "5001"
+        HOSTNAME: "0.0.0.0"
+        NODE_ENV: "production"
+    - name: mongo
+      image: mirror.gcr.io/library/mongo:7
+      servicePorts:
+        - 27017
+      vars:
+        MONGO_INITDB_ROOT_USERNAME: "root"
+        MONGO_INITDB_ROOT_PASSWORD: "admin"
