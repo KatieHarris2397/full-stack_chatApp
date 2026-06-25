@@ -1,0 +1,30 @@
+application:
+  name: full-stack-chatapp
+  pods:
+    - name: frontend
+      image: "registry.nexlayer.io/user_01kna6j8vrcfj9q0wjtq5qsq3n/full-stack_chatapp:19eff7f0d15"
+      path: /
+      servicePorts:
+        - 80
+      vars:
+        BACKEND_URL: "<% URL %>"
+    - name: backend
+      image: "registry.nexlayer.io/user_01kna6j8vrcfj9q0wjtq5qsq3n/full-stack_chatapp:19eff7f0d15"
+      servicePorts:
+        - 5001
+      vars:
+        NODE_ENV: "production"
+        PORT: "5001"
+        HOSTNAME: "0.0.0.0"
+        MONGO_URI: "mongodb://root:admin@mongo.pod:27017/chatdb?authSource=admin"
+    - name: mongo
+      image: mirror.gcr.io/library/mongo:7
+      servicePorts:
+        - 27017
+      vars:
+        MONGO_INITDB_ROOT_USERNAME: "root"
+        MONGO_INITDB_ROOT_PASSWORD: "admin"
+      volumes:
+        - name: full-stack-chatapp-mongo-data
+          size: 10Gi
+          mountPath: /data/db
