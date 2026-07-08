@@ -15,7 +15,7 @@
 
 ## Project Summary
 <!-- nexlayer:section agent-managed=project_summary -->
-A real-time chat application featuring secure user authentication, instant messaging via Socket.io, and a responsive UI built with React and TailwindCSS.
+A real-time full-stack chat application featuring instant messaging via Socket.io, JWT authentication, and a React-based frontend served by Nginx.
 <!-- nexlayer:end -->
 
 ## Technology Stack
@@ -28,15 +28,14 @@ A real-time chat application featuring secure user authentication, instant messa
 | MongoDB | database | latest | docker-compose.yml |
 | Socket.io | tool | latest | README.md |
 | Nginx | infra | alpine | Dockerfile |
-| Docker | tool | latest | docker-compose.yml |
+| Docker | infra | latest | docker-compose.yml |
 <!-- nexlayer:end -->
 
 ## Repository Structure
 <!-- nexlayer:section agent-managed=structure_map -->
-- backend/ — Node.js/Express API and Socket.io logic
-- frontend/ — React application with TailwindCSS
-- k8s/ — Kubernetes orchestration manifests
-- Dockerfile — Multi-stage build for frontend static assets
+- frontend/ — React application with TailwindCSS and Zustand
+- backend/ — Node.js/Express server with Socket.io and MongoDB integration
+- Dockerfile — Multi-stage build for frontend production assets served by Nginx
 <!-- nexlayer:end -->
 
 ## External Services Required
@@ -147,7 +146,7 @@ application:
 
 ## Nexlayer Configuration
 <!-- nexlayer:section agent-managed=nexlayer_config -->
-**Last deployed:** 2026-07-08T14:43:15Z  
+**Last deployed:** 2026-07-08T18:31:21Z  
 **Live URL:** https://kitbear-studio-full-stack-chatapp.cloud.nexlayer.ai  
 **Runtime:**  · **Port:** auto-detected  
 **Deploy branch:** nexlayer  
@@ -190,7 +189,8 @@ application:
 <!-- nexlayer:section agent-managed=build_history -->
 | Date | Status | Notes |
 |------|--------|-------|
-| 2026-07-08T14:41:34Z | analyzed | initial repo analysis |
-| 2026-07-08T14:43:15Z | success | deployed https://kitbear-studio-full-stack-chatapp.cloud.nexlayer.ai |
+| 2026-07-08T18:25:06Z | analyzed | initial repo analysis |
+| 2026-07-08T18:31:21Z | success | deployed https://kitbear-studio-full-stack-chatapp.cloud.nexlayer.ai |
 <!-- nexlayer:end -->
+
 
