@@ -15,7 +15,7 @@
 
 ## Project Summary
 <!-- nexlayer:section agent-managed=project_summary -->
-A real-time chat application featuring secure user authentication via JWT, real-time messaging through Socket.io, and a modern UI built with React and TailwindCSS.
+A real-time chat application featuring instant messaging via Socket.io, user authentication with JWT, and a modern React frontend with TailwindCSS.
 <!-- nexlayer:end -->
 
 ## Technology Stack
@@ -23,20 +23,20 @@ A real-time chat application featuring secure user authentication via JWT, real-
 | Name | Kind | Version | Detected From |
 |------|------|---------|---------------|
 | Node.js | language | 22 | Dockerfile |
-| Express | framework | not specified | README.md |
-| React | framework | not specified | README.md |
+| Express | framework | latest | README.md |
+| React | framework | latest | README.md |
 | MongoDB | database | latest | docker-compose.yml |
-| Socket.io | tool | not specified | README.md |
+| Socket.io | tool | latest | README.md |
 | Nginx | infra | alpine | Dockerfile |
-| Docker | tool | not specified | docker-compose.yml |
+| TailwindCSS | tool | latest | README.md |
 <!-- nexlayer:end -->
 
 ## Repository Structure
 <!-- nexlayer:section agent-managed=structure_map -->
-- frontend/ — React frontend with TailwindCSS and Zustand
-- backend/ — Node.js Express server with Socket.io and MongoDB integration
-- k8s/ — Kubernetes manifest files
-- Dockerfile — Multi-stage build for frontend serving via Nginx
+- backend/ — Node.js Express server and Socket.io logic
+- frontend/ — React application source code
+- k8s/ — Kubernetes orchestration manifests
+- package.json — Root build scripts for orchestration
 <!-- nexlayer:end -->
 
 ## External Services Required
@@ -147,7 +147,7 @@ application:
 
 ## Nexlayer Configuration
 <!-- nexlayer:section agent-managed=nexlayer_config -->
-**Last deployed:** 2026-07-08T18:35:59Z  
+**Last deployed:** 2026-07-08T19:48:42Z  
 **Live URL:** https://kitbear-studio-full-stack-chatapp.cloud.nexlayer.ai  
 **Runtime:**  · **Port:** auto-detected  
 **Deploy branch:** nexlayer  
@@ -190,9 +190,10 @@ application:
 <!-- nexlayer:section agent-managed=build_history -->
 | Date | Status | Notes |
 |------|--------|-------|
-| 2026-07-08T18:35:03Z | analyzed | initial repo analysis |
-| 2026-07-08T18:35:59Z | success | deployed https://kitbear-studio-full-stack-chatapp.cloud.nexlayer.ai |
+| 2026-07-08T19:47:40Z | analyzed | initial repo analysis |
+| 2026-07-08T19:48:42Z | success | deployed https://kitbear-studio-full-stack-chatapp.cloud.nexlayer.ai |
 <!-- nexlayer:end -->
+
 
 
 
