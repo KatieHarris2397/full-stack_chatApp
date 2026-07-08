@@ -15,28 +15,28 @@
 
 ## Project Summary
 <!-- nexlayer:section agent-managed=project_summary -->
-A real-time full-stack chat application featuring instant messaging via Socket.io, JWT authentication, and user profile management with a React frontend and Node.js backend.
+A real-time chat application featuring secure user authentication, instant messaging via Socket.io, and a responsive UI built with React and TailwindCSS.
 <!-- nexlayer:end -->
 
 ## Technology Stack
 <!-- nexlayer:section agent-managed=tech_stack -->
 | Name | Kind | Version | Detected From |
 |------|------|---------|---------------|
-| Node.js | language | 14+ | README.md |
+| Node.js | language | 22 | Dockerfile |
 | Express | framework | latest | README.md |
 | React | framework | latest | README.md |
 | MongoDB | database | latest | docker-compose.yml |
-| Socket.io | framework | latest | README.md |
-| TailwindCSS | framework | latest | README.md |
-| Docker | infra | latest | docker-compose.yml |
+| Socket.io | tool | latest | README.md |
+| Nginx | infra | alpine | Dockerfile |
+| Docker | tool | latest | docker-compose.yml |
 <!-- nexlayer:end -->
 
 ## Repository Structure
 <!-- nexlayer:section agent-managed=structure_map -->
-- backend/ — Node.js/Express API and Socket.io server
-- frontend/ — React frontend with TailwindCSS
-- k8s/ — Kubernetes manifest files
-- docker-compose.yml — Local orchestration
+- backend/ — Node.js/Express API and Socket.io logic
+- frontend/ — React application with TailwindCSS
+- k8s/ — Kubernetes orchestration manifests
+- Dockerfile — Multi-stage build for frontend static assets
 <!-- nexlayer:end -->
 
 ## External Services Required
@@ -80,11 +80,11 @@ BACKEND_URL=http://localhost:5001
 | `backend` | `NODE_ENV` | `"production"` | plain |
 | `backend` | `PORT` | `"5001"` | plain |
 | `backend` | `HOSTNAME` | `"0.0.0.0"` | plain |
-| `backend` | `MONGO_URI` | `"mongodb://root:${MONGO_INITDB_ROOT_PASSWORD}@mongo.pod:27017/chatdb?authSource=admin"` | inter-pod |
+| `backend` | `MONGODB_URI` | `"mongodb://root:${MONGO_INITDB_ROOT_PASSWORD}@mongo.pod:27017/chat-app?authSource=admin"` | inter-pod |
 | `mongo` | `MONGO_INITDB_ROOT_USERNAME` | `"root"` | plain |
 | `mongo` | `MONGO_INITDB_ROOT_PASSWORD` | `"${MONGO_INITDB_ROOT_PASSWORD}"` | inter-pod |
-| `full-stack-chatapp-mongo-data` | `size` | `10Gi` | plain |
-| `full-stack-chatapp-mongo-data` | `mountPath` | `/data/db` | plain |
+| `full-stack-chatapp-mongodb-data` | `size` | `10Gi` | plain |
+| `full-stack-chatapp-mongodb-data` | `mountPath` | `/data/db` | plain |
 
 ### nexlayer.yaml
 
@@ -93,21 +93,21 @@ application:
   name: full-stack-chatapp
   pods:
     - name: frontend
-      image: "registry.nexlayer.io/user_01kna6j8vrcfj9q0wjtq5qsq3n/full-stack_chatapp:19eff7f0d15"
+      image: "registry.nexlayer.io/user_01kna6j8vrcfj9q0wjtq5qsq3n/full-stack_chatapp:19f422cdf01"
       path: /
       servicePorts:
         - 80
       vars:
         BACKEND_URL: "<% URL %>"
     - name: backend
-      image: "registry.nexlayer.io/user_01kna6j8vrcfj9q0wjtq5qsq3n/full-stack_chatapp:19eff7f0d15"
+      image: "registry.nexlayer.io/user_01kna6j8vrcfj9q0wjtq5qsq3n/full-stack_chatapp:19f422cdf01"
       servicePorts:
         - 5001
       vars:
         NODE_ENV: "production"
         PORT: "5001"
         HOSTNAME: "0.0.0.0"
-        MONGO_URI: "mongodb://root:${MONGO_INITDB_ROOT_PASSWORD}@mongo.pod:27017/chatdb?authSource=admin"
+        MONGODB_URI: "mongodb://root:${MONGO_INITDB_ROOT_PASSWORD}@mongo.pod:27017/chat-app?authSource=admin"
     - name: mongo
       image: mirror.gcr.io/library/mongo:7
       servicePorts:
@@ -116,11 +116,10 @@ application:
         MONGO_INITDB_ROOT_USERNAME: "root"
         MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
       volumes:
-        - name: full-stack-chatapp-mongo-data
+        - name: full-stack-chatapp-mongodb-data
           size: 10Gi
           mountPath: /data/db
 ```
-
 <!-- nexlayer:end -->
 
 ## Nexlayer Deployment Plan
@@ -148,31 +147,31 @@ application:
 
 ## Nexlayer Configuration
 <!-- nexlayer:section agent-managed=nexlayer_config -->
-**Last deployed:** 2026-06-26T15:46:13Z  
+**Last deployed:** 2026-07-08T14:43:15Z  
 **Live URL:** https://kitbear-studio-full-stack-chatapp.cloud.nexlayer.ai  
-**Runtime:** node · **Port:** 80  
-**Deploy branch:** main  
+**Runtime:**  · **Port:** auto-detected  
+**Deploy branch:** nexlayer  
 
 ```yaml
 application:
   name: full-stack-chatapp
   pods:
     - name: frontend
-      image: "registry.nexlayer.io/user_01kna6j8vrcfj9q0wjtq5qsq3n/full-stack_chatapp:19eff7f0d15"
+      image: "registry.nexlayer.io/user_01kna6j8vrcfj9q0wjtq5qsq3n/full-stack_chatapp:19f422cdf01"
       path: /
       servicePorts:
         - 80
       vars:
         BACKEND_URL: "<% URL %>"
     - name: backend
-      image: "registry.nexlayer.io/user_01kna6j8vrcfj9q0wjtq5qsq3n/full-stack_chatapp:19eff7f0d15"
+      image: "registry.nexlayer.io/user_01kna6j8vrcfj9q0wjtq5qsq3n/full-stack_chatapp:19f422cdf01"
       servicePorts:
         - 5001
       vars:
         NODE_ENV: "production"
         PORT: "5001"
         HOSTNAME: "0.0.0.0"
-        MONGO_URI: "mongodb://root:${MONGO_INITDB_ROOT_PASSWORD}@mongo.pod:27017/chatdb?authSource=admin"
+        MONGODB_URI: "mongodb://root:${MONGO_INITDB_ROOT_PASSWORD}@mongo.pod:27017/chat-app?authSource=admin"
     - name: mongo
       image: mirror.gcr.io/library/mongo:7
       servicePorts:
@@ -181,7 +180,7 @@ application:
         MONGO_INITDB_ROOT_USERNAME: "root"
         MONGO_INITDB_ROOT_PASSWORD: "${MONGO_INITDB_ROOT_PASSWORD}"
       volumes:
-        - name: full-stack-chatapp-mongo-data
+        - name: full-stack-chatapp-mongodb-data
           size: 10Gi
           mountPath: /data/db
 ```
@@ -191,6 +190,7 @@ application:
 <!-- nexlayer:section agent-managed=build_history -->
 | Date | Status | Notes |
 |------|--------|-------|
-| 2026-06-26T15:45:01Z | analyzed | initial repo analysis |
-| 2026-06-26T15:46:13Z | success | deployed https://kitbear-studio-full-stack-chatapp.cloud.nexlayer.ai |
+| 2026-07-08T14:41:34Z | analyzed | initial repo analysis |
+| 2026-07-08T14:43:15Z | success | deployed https://kitbear-studio-full-stack-chatapp.cloud.nexlayer.ai |
 <!-- nexlayer:end -->
+
